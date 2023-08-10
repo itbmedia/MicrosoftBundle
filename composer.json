@@ -18,7 +18,6 @@
             "email": "lucas.napik@logy.se"
         }
     ],
-    "minimum-stability": "RC",
     "require": {
         "symfony/http-client": "^5.4",
         "symfony/http-kernel": "^5.4",
