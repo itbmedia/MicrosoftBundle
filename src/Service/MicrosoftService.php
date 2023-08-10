@@ -55,7 +55,7 @@ class MicrosoftService implements MicrosoftServiceInterface
     public function createAuthRedirectResponse(string $scope, string $route, array $params, array $state): RedirectResponse
     {
         return new RedirectResponse(
-            sprintf("https://login.microsoftonline.com/%s/oauth2/%s/authorize?%s", $this->tenant, self::VERSION, http_build_query(
+            sprintf("https://login.microsoftonline.com/common/oauth2/%s/authorize?%s", self::VERSION, http_build_query(
                 array(
                     'client_id' => $this->client,
                     'response_type' => "code",
@@ -70,7 +70,7 @@ class MicrosoftService implements MicrosoftServiceInterface
 
     public function requestTokenFromCode(string $code, string $route, array $params): Token
     {
-        $response = $this->httpClient->request("POST", sprintf("https://login.microsoftonline.com/%s/oauth2/%s/token", $this->tenant, self::VERSION), array(
+        $response = $this->httpClient->request("POST", sprintf("https://login.microsoftonline.com/common/oauth2/%s/token", self::VERSION), array(
             'headers' => array(
                 'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'
             ),
@@ -92,7 +92,7 @@ class MicrosoftService implements MicrosoftServiceInterface
 
     public function refreshToken(Token $expiredToken): Token
     {
-        $response = $this->httpClient->request("POST", sprintf("https://login.microsoftonline.com/%s/oauth2/%s/token", $this->tenant, self::VERSION), array(
+        $response = $this->httpClient->request("POST", sprintf("https://login.microsoftonline.com/common/oauth2/%s/token", self::VERSION), array(
             'headers' => array(
                 'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'
             ),
