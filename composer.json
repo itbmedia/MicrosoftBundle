@@ -19,13 +19,13 @@
         }
     ],
     "require": {
-        "symfony/http-client": "^5.4",
-        "symfony/http-kernel": "^5.4",
-        "symfony/config": "^5.4",
-        "symfony/dependency-injection": "^5.4",
-        "jms/serializer": "^3.0@dev",
-        "symfony/http-foundation": "^5.4.20",
-        "symfony/routing": "^5.4.19"
+        "symfony/http-client": "*",
+        "symfony/http-kernel": "*",
+        "symfony/config": "*",
+        "symfony/dependency-injection": "*",
+        "jms/serializer": "*",
+        "symfony/http-foundation": "*",
+        "symfony/routing": "*"
     },
     "conflict": {
         "symfony/symfony": "*"
