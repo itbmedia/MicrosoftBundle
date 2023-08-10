@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="Logy\Bundle\MicrosoftBundle\Service\MicrosoftGraphClient" autowire="true" class="Logy\Bundle\MicrosoftBundle\Service\MicrosoftGraphClient" public="false"/>
+        <service id="logy.microsoft.service" class="Logy\Bundle\MicrosoftBundle\Service\MicrosoftService" public="true">
+            <argument type="service" id="monolog.logger"/>
+            <argument type="service" id="router.default"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="http_client"/>
+            <argument type="service" id="logy.microsoft.data.serializer" />
+            <argument type="service" id="Logy\Bundle\MicrosoftBundle\Service\MicrosoftGraphClient" />
+            <argument>%logy.microsoft.config.server%</argument>
+            <argument>%logy.microsoft.config.tenant%</argument>
+            <argument>%logy.microsoft.config.client%</argument>
+            <argument>%logy.microsoft.config.secret%</argument>
+        </service>
+        <service id="logy.microsoft.data.serializer" class="Logy\Bundle\MicrosoftBundle\Service\DataSerializer" public="false">
+            <argument type="service" id="kernel" />
+        </service>
+    </services>
+</container>

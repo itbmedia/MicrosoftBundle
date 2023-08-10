@@ -1,0 +1,40 @@
+{
+    "name": "logy/microsoft-bundle",
+    "type": "bundle",
+    "license": "MIT",
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Logy\\Bundle\\MicrosoftBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas Napik",
+            "email": "lucas.napik@logy.se"
+        }
+    ],
+    "minimum-stability": "RC",
+    "require": {
+        "symfony/http-client": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "jms/serializer": "^3.0@dev",
+        "symfony/http-foundation": "^5.4.20",
+        "symfony/routing": "^5.4.19"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": true,
+            "require": "5.4.*"
+        }
+    }
+}
