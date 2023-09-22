@@ -14,7 +14,7 @@ class MicrosoftGraphClient
         $this->microsoftGraphClient = $microsoftGraphClient;
     }
 
-    public function Request(Token $token, string $method, string $endpoint, array $data)
+    public function Request(Token $token, string $method, string $endpoint, ?array $data = null)
     {
         $response = $this->microsoftGraphClient->request($method, $endpoint, array(
             'headers' => array(

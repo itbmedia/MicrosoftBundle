@@ -16,4 +16,6 @@ interface MicrosoftServiceInterface
 
     public function sendEmail(Token $token, EmailRequest $request, ?bool $retry);
 
+    public function getEmails(Token $token, array $query, ?bool $retry = true) : array;
+
 }

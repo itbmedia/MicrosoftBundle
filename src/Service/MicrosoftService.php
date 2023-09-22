@@ -121,4 +121,18 @@ class MicrosoftService implements MicrosoftServiceInterface
             $this->sendEmail($this->refreshToken($token), $request, false);
         }
     }
+
+    public function getEmails(Token $token, array $query, ?bool $retry = true) : array
+    {
+        try {
+            $response = $this->graphClient->Request($token, "GET", "me/messages?".http_build_query($query));
+            // print_r($response->getContent());
+            // die;
+            return json_decode($response->getContent(), true);
+        } catch (\Exception $e) {
+            $this->logger->critical($e->getMessage());
+            if (!$retry) throw $e;
+            $this->getEmails($this->refreshToken($token), $query, false);
+        }
+    }
 }
