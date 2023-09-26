@@ -114,25 +114,45 @@ class MicrosoftService implements MicrosoftServiceInterface
     public function sendEmail(Token $token, EmailRequest $request, ?bool $retry = true)
     {
         try {
-            $this->graphClient->Request($token, "POST", "me/sendMail", $request->toArray());
+            $response = $this->graphClient->Request($token, "POST", "me/sendMail", $request->toArray());
+            return json_decode($response->getContent(), true);
         } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
+            $this->logger->critical($e);
             if (!$retry) throw $e;
             $this->sendEmail($this->refreshToken($token), $request, false);
         }
     }
 
-    public function getEmails(Token $token, array $query, ?bool $retry = true) : array
+    public function getEmails(Token $token, array $query, ?bool $retry = true, $fetchAttachments = false): array
     {
+        $graphClient = $this->graphClient;
+
         try {
-            $response = $this->graphClient->Request($token, "GET", "me/messages?".http_build_query($query));
-            // print_r($response->getContent());
-            // die;
-            return json_decode($response->getContent(), true);
+            $res = $this->graphClient->Request($token, "GET", "me/messages?" . http_build_query($query));
+            $response = json_decode($res->getContent(), true);
+            if (!isset($response["value"])) return $response;
+
+            if ($fetchAttachments) {
+                $response["value"] = array_map(function ($message) use ($token, $query, $graphClient) {
+                    if (!$message['hasAttachments']) {
+                        return $message;
+                    }
+
+                    $attachmentResponse = $graphClient->Request($token, "GET", "me/messages/" . $message["id"] . "/attachments?" . http_build_query($query));
+                    $attachments = json_decode($attachmentResponse->getContent(), true)["value"] ?? [];
+                    $message['attachments'] = $attachments;
+
+                    return $message;
+                }, $response["value"]);
+            }
+
+            return $response;
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
             if (!$retry) throw $e;
             $this->getEmails($this->refreshToken($token), $query, false);
         }
+
+        return [];
     }
 }

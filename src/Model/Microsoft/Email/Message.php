@@ -7,16 +7,16 @@ use JMS\Serializer\SerializerBuilder;
 
 class Message
 {
-    public function __construct(string $subject, Body $body, array $toRecipients = [], array $ccRecipients = []) {
+    public function __construct(string $subject, Body $body, array $toRecipients = [], array $ccRecipients = [], array $attachments = []) {
         $this->subject = $subject;
         $this->body = $body;
         $this->toRecipients = $toRecipients;
         $this->ccRecipients = $ccRecipients;
-        // $this->attachments = $attachments;
+        $this->attachments = $attachments;
     }
 
     /**
-     * 
+     *
      * @var string
      * @type("string")
      * @SerializedName("subject")
@@ -24,7 +24,7 @@ class Message
     private string $subject;
 
     /**
-     * 
+     *
      * @var Body
      * @type("Logy\Bundle\MicrosoftBundle\Model\Microsoft\Email\Body")
      * @SerializedName("body")
@@ -32,22 +32,28 @@ class Message
     private Body $body;
 
     /**
-     * 
+     *
      * @var array
      * @type("array<Logy\Bundle\MicrosoftBundle\Model\Microsoft\Email\Recipient>")
      * @SerializedName("toRecipients")
      */
     private array $toRecipients = [];
-    
+
     /**
-     * 
+     *
      * @var array
      * @type("array<Logy\Bundle\MicrosoftBundle\Model\Microsoft\Email\Recipient>")
      * @SerializedName("ccRecipients")
      */
     private array $ccRecipients = [];
 
-    // private array $attachments = [];
+    /**
+     *
+     * @var array
+     * @type("array<Logy\Bundle\MicrosoftBundle\Model\Microsoft\Email\Attachment>")
+     * @SerializedName("attachments")
+     */
+    private array $attachments = [];
 
 
     /**
@@ -59,7 +65,7 @@ class Message
     }
 
     /**
-     * @param string $subject 
+     * @param string $subject
      * @return self
      */
     public function setSubject(string $subject) : self
@@ -77,7 +83,7 @@ class Message
     }
 
     /**
-     * @param Body $body 
+     * @param Body $body
      * @return self
      */
     public function setBody(Body $body) : self
@@ -95,7 +101,7 @@ class Message
     }
 
     /**
-     * @param array $toRecipients 
+     * @param array $toRecipients
      * @return self
      */
     public function addToRecipient(Recipient $recipient) : self
@@ -105,7 +111,7 @@ class Message
     }
 
     /**
-     * @param array $toRecipients 
+     * @param array $toRecipients
      * @return self
      */
     public function setToRecipients(array $toRecipients) : self
@@ -123,7 +129,7 @@ class Message
     }
 
     /**
-     * @param array $toRecipients 
+     * @param array $toRecipients
      * @return self
      */
     public function addCcRecipient(Recipient $recipient) : self
@@ -133,12 +139,40 @@ class Message
     }
 
     /**
-     * @param array $ccRecipients 
+     * @param array $ccRecipients
      * @return self
      */
     public function setCcRecipients(array $ccRecipients) : self
     {
         $this->ccRecipients = $ccRecipients;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttachments() : array
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param array $attachments
+     * @return self
+     */
+    public function addAttachment(Attachment $attachment) : self
+    {
+        $this->attachments[] = $attachment;
+        return $this;
+    }
+
+    /**
+     * @param array $attachments
+     * @return self
+     */
+    public function setAttachments(array $attachments) : self
+    {
+        $this->attachments = $attachments;
         return $this;
     }
 

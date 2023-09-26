@@ -6,13 +6,14 @@ use JMS\Serializer\SerializerBuilder;
 
 class EmailRequest
 {
-    public function __construct(Message $message, bool $saveToSentItems = true) {
+    public function __construct(Message $message, bool $saveToSentItems = true, array $attachments = []) {
         $this->message = $message;
+        $this->attachments = $attachments;
         $this->saveToSentItems = $saveToSentItems;
     }
 
     /**
-     * 
+     *
      * @var Message
      * @type("Logy\Bundle\MicrosoftBundle\Model\Microsoft\Email\Message")
      * @SerializedName("message")
@@ -20,12 +21,20 @@ class EmailRequest
     private Message $message;
 
     /**
-     * 
+     *
      * @var bool
      * @type("bool")
      * @SerializedName("saveToSentItems")
      */
     private bool $saveToSentItems = true;
+
+    /**
+     *
+     * @var array
+     * @type("array")
+     * @SerializedName("attachments")
+     */
+    private array $attachments = [];
 
     /**
      * @return Message
@@ -36,7 +45,7 @@ class EmailRequest
     }
 
     /**
-     * @param Message $message 
+     * @param Message $message
      * @return self
      */
     public function setMessage(Message $message) : self
@@ -54,12 +63,30 @@ class EmailRequest
     }
 
     /**
-     * @param bool $saveToSentItems 
+     * @param bool $saveToSentItems
      * @return self
      */
     public function setSaveToSentItems(bool $saveToSentItems) : self
     {
         $this->saveToSentItems = $saveToSentItems;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttachments() : array
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param array $attachments
+     * @return self
+     */
+    public function setAttachments(array $attachments) : self
+    {
+        $this->attachments = $attachments;
         return $this;
     }
 
