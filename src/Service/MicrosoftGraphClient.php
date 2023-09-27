@@ -22,7 +22,7 @@ class MicrosoftGraphClient
             ),
             'json' => $data
         ));
-        if($response->getStatusCode() === 401) throw new \Exception("Unauthorized", 401);
+        if ($response->getStatusCode() === 401) throw new \Exception("Unauthorized", 401);
         return $response;
     }
 }

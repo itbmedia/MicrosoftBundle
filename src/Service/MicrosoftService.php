@@ -138,7 +138,7 @@ class MicrosoftService implements MicrosoftServiceInterface
                         return $message;
                     }
 
-                    $attachmentResponse = $graphClient->Request($token, "GET", "me/messages/" . $message["id"] . "/attachments?" . http_build_query($query));
+                    $attachmentResponse = $graphClient->Request($token, "GET", "me/messages/" . $message["id"] . "/attachments");
                     $attachments = json_decode($attachmentResponse->getContent(), true)["value"] ?? [];
                     $message['attachments'] = $attachments;
 
